@@ -1,0 +1,2 @@
+include FeatureModules.settingModules
+rootProject.name = 'FireBaseChat'

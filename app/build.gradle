@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Versions.compileSdk
+    defaultConfig {
+        applicationId ApplicationId.id
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Releases.versionCode
+        versionName Releases.versionName
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions { unitTests.returnDefaultValues = true }
+
+    dataBinding { enabled = true }
+
+    dynamicFeatures = FeatureModules.modules
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+    dataBinding {
+        enabled = true
+    }
+
+
+}
+
+dependencies {
+    api SupportLibraries.appcompat
+    api SupportLibraries.constrainLayout
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api project(Modules.model)
+    api project(Modules.cache)
+    api project(Modules.core)
+    api project(Modules.networking)
+    api project(Modules.navigation)
+
+    api Libraries.multidex
+   // api GoogleLibraries.playCore
+    api Libraries.roomDB
+    kapt Libraries.roomCompiler
+    api SupportLibraries.recyclerview
+
+    api Libraries.ktx
+    api Libraries.kotlin
+
+    api SupportLibraries.design
+}
+androidExtensions {
+    experimental = true
+}

@@ -1,0 +1,29 @@
+apply from: "$rootDir/common-android-library.gradle"
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation SupportLibraries.appcompat
+    implementation SupportLibraries.recyclerview
+    implementation Libraries.shimmer
+
+    implementation SupportLibraries.design
+    implementation Libraries.lifecycleExtensions
+    implementation Libraries.paging
+    implementation Libraries.retrofitgson
+
+    kapt Libraries.lifecycleCompiler
+    testImplementation TestLibraries.lifecycleTesting
+
+    implementation project(Modules.model)
+    implementation project(Modules.cache)
+    implementation project(Modules.networking)
+    api Libraries.glide
+    kapt Libraries.glideCompiler
+
+    implementation Libraries.workManager
+    implementation Libraries.roomDB
+    kapt Libraries.roomCompiler
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"
