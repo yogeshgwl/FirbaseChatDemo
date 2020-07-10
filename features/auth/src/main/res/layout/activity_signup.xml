@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.auth.login.LoginField" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.auth.SignupViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".LoginActivity">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:visibility="gone"
+            app:elevation="0dp"
+            android:background="#000">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:title=" "
+                app:contentInsetStartWithNavigation="0dp"
+                app:titleTextColor="@color/white">
+
+                <TextView
+                    android:id="@+id/breakoutTitle"
+                    style="@style/TextView.Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:singleLine="true" />
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20dp"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/signUp"
+                        style="@style/TextView.Body.Heading5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_30dp"
+                        android:gravity="center"
+                        android:text="@string/_sign_up" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20dp"
+                        android:hint="@string/first_name_mandatory">
+
+                        <com.aucto.core.MaterialEditText
+                            style="@style/Material.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.afterTextChange(LoginField.FIRST_NAME,text.toString())}"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15dp"
+                        android:hint="@string/last_name_mandatory">
+
+                        <com.aucto.core.MaterialEditText
+                            style="@style/Material.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.afterTextChange(LoginField.LAST_NAME,text.toString())}"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiEmail"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15dp"
+                        android:hint="@string/enter_email">
+
+                        <com.aucto.core.MaterialEditText
+                            style="@style/Material.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.afterTextChange(LoginField.USER_NAME,text.toString())}"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15dp"
+                        android:hint="@string/enter_mobile">
+
+                        <com.aucto.core.MaterialEditText
+                            style="@style/Material.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="phone"
+                            android:maxLength="10"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.afterTextChange(LoginField.MOBILE_NUMBER,text.toString())}"
+
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiPassword"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15dp"
+                        android:hint="@string/enter_password"
+                        app:passwordToggleEnabled="true">
+
+                        <com.aucto.core.MaterialEditText
+                            android:id="@+id/textPassword"
+                            style="@style/Material.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.afterTextChange(LoginField.PASSWORD,text.toString())}"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15dp"
+                        android:hint="@string/con_password_mandatory"
+                        app:passwordToggleEnabled="true">
+
+                        <com.aucto.core.MaterialEditText
+                            style="@style/Material.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:onTextChanged="@{(text, start, before, count) -> viewModel.afterTextChange(LoginField.CONFIRM_PASSWORD,text.toString())}"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    style="@style/Material.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_20dp"
+                    android:onClick="@{()->viewModel.onSignUpClick()}"
+                    android:text="@string/_sign_up" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/_20dp"
+                    android:layout_marginRight="@dimen/_20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtAccount"
+                        style="@style/TextView.Body"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/_10dp"
+                        android:paddingBottom="@dimen/_10dp"
+                        android:text="@string/already_have_account" />
+
+                    <TextView
+                        android:id="@+id/txtSignup"
+                        style="@style/TextView.Body.Bold"
+                        android:layout_width="wrap_content"
+                        android:autoLink="all"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:linksClickable="false"
+                        android:onClick="@{()->viewModel.onLoginClick()}"
+                        android:paddingTop="@dimen/_10dp"
+                        android:paddingBottom="@dimen/_10dp"
+                        android:selectAllOnFocus="false"
+                        android:text="@string/login_here"
+                        tools:targetApi="m" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>
