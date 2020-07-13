@@ -1,13 +1,11 @@
-package com.auth.login
+package com.aucto.auth
 
 import androidx.lifecycle.MutableLiveData
-import com.aucto.chat.MyApplication
 import com.aucto.core.ActionLiveData
 import com.aucto.core.BaseViewModel
 import com.aucto.core.FormValidator
 import com.aucto.model.LoginItem
 import com.aucto.networking.util.StringUtil
-import com.auth.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,7 +42,10 @@ class LoginViewModel(val model: LoginRepository) : BaseViewModel() {
                 withContext(Dispatchers.Main) {
                     when {
                         user == null -> showError.postValue(StringUtil.getString(R.string.user_not_exist))
-                        user.password == loginItem.password -> navigateToDashboard.sendAction(true)
+                        user.password == loginItem.password -> {
+                            model.saveUserDetails(user)
+                            navigateToDashboard.sendAction(true)
+                        }
                         else -> showError.postValue(StringUtil.getString(R.string.invalid_credential))
                     }
                 }

@@ -1,9 +1,9 @@
-package com.auth
+package com.aucto.auth
 
 import android.app.Activity
 import android.os.Bundle
+import com.aucto.auth.databinding.ActivitySignupBinding
 import com.aucto.core.*
-import com.auth.databinding.ActivitySignupBinding
 import kotlinx.android.synthetic.main.activity_signup.*
 
 class SignupActivity : BaseActivity<ActivitySignupBinding, SignupViewModel>() {

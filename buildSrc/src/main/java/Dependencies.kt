@@ -11,7 +11,8 @@ object ApplicationId {
  */
 object FeatureModules {
     var modules = arrayOf(
-        Modules.firebasechat
+        Modules.firebasechat,
+        Modules.auth
     )
 
     val settingModules = arrayOf(
@@ -21,7 +22,8 @@ object FeatureModules {
         Modules.core,
         Modules.navigation,
         Modules.cache,
-        Modules.firebasechat
+        Modules.firebasechat,
+        Modules.auth
     )
 }
 
@@ -37,6 +39,7 @@ object Modules {
     val networking = ":common:networking"
     val model = ":common:model"
     val firebasechat = ":features:firebasechat"
+    val auth = ":features:auth"
 }
 
 object Releases {
@@ -58,8 +61,8 @@ object Versions {
 
     val googleServices = "4.3.3"
 
-    val firebaseAuth = "16.0.4"
-    val firebaseCore = "16.0.4"
+    val firebaseAuth = "19.3.1"
+    val firebaseCore = "19.3.1"
     val facebookSdk = "4.30.0"
 
     val fabric = "1.27.1"
@@ -107,6 +110,8 @@ object Versions {
     val mockitoKotlin = "2.1.0"
     val mockitoInline = "2.24.5"
     val workmanager = "2.4.0-rc01"
+
+    val firebaseDB = "19.3.1"
 }
 
 // Libraries used in modules
@@ -140,7 +145,7 @@ object Libraries {
     val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     val lifecycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
 
-     val shimmer = "io.supercharge:shimmerlayout:${Versions.shimmerVersion}"
+    val shimmer = "io.supercharge:shimmerlayout:${Versions.shimmerVersion}"
 
 }
 
@@ -153,13 +158,14 @@ object SupportLibraries {
 }
 
 object GoogleLibraries {
-    val auth = "com.google.android.gms:play-services-auth:${Versions.googleAuth}"
+    val auth = "com.google.android.gms:play-services-aucto:${Versions.googleAuth}"
     // val playCore = "com.google.android.play:core:${Versions.playCore}"
 }
 
 object FirebaseLibraries {
-    val auth = "com.google.firebase:firebase-auth:${Versions.firebaseAuth}"
-    val core = "com.google.firebase:firebase-core:${Versions.firebaseCore}"
+/*    val auth = "com.google.firebase:firebase-auth:${Versions.firebaseAuth}"
+    val core = "com.google.firebase:firebase-core:${Versions.firebaseCore}"*/
+    val DB = "com.google.firebase:firebase-database:${Versions.firebaseDB}"
 }
 
 object FacebookLibraries {

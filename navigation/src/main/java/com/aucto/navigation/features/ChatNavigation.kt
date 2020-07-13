@@ -5,7 +5,7 @@ import com.aucto.navigation.loadIntentOrNull
 
 object ChatNavigation : DynamicFeature<Intent> {
 
-    private const val CHAT_HOME = "com.chat.MainActivity"
+    private const val CHAT_HOME = "com.acto.chat.ChatActivity"
 
     override val dynamicStart: Intent?
         get() = CHAT_HOME.loadIntentOrNull()

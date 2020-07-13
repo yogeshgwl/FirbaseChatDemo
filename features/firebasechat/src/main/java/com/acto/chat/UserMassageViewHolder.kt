@@ -1,4 +1,4 @@
-package com.chat
+package com.acto.chat
 
 import android.view.View
 import com.aucto.model.Message

@@ -5,13 +5,13 @@
 
     <data>
 
-        <import type="com.auth.login.LoginField" />
+        <import type="com.aucto.auth.LoginField" />
 
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="com.auth.SignupViewModel" />
+            type="com.aucto.auth.SignupViewModel" />
     </data>
 
     <LinearLayout

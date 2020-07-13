@@ -13,7 +13,7 @@
     <string name="email_username">Email/Username</string>
     <string name="gender">Gender</string>
     <string name="password">Password</string>
-    <string name="first_name_mandatory">First Name</string>
+    <string name="first_name_mandatory">First Name</string>`
     <string name="last_name_mandatory">Last Name</string>
     <string name="email_username_mandatory">Email/Username*</string>
     <string name="password_mandatory">Password</string>

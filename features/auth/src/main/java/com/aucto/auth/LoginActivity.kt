@@ -1,12 +1,10 @@
-package com.auth.login
+package com.aucto.auth
 
 import android.content.Intent
 import android.os.Bundle
+import com.aucto.auth.databinding.ActivityLayoutLoginBinding
 import com.aucto.core.*
-import com.auth.DashboardActivity
-import com.auth.R
-import com.auth.SignupActivity
-import com.auth.databinding.ActivityLayoutLoginBinding
+import com.aucto.navigation.features.UserNavigation
 
 class LoginActivity : BaseActivity<ActivityLayoutLoginBinding, LoginViewModel>() {
     companion object {
@@ -19,7 +17,7 @@ class LoginActivity : BaseActivity<ActivityLayoutLoginBinding, LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mDataBinding.setVariable(com.auth.BR.viewModel, mViewModel)
+        mDataBinding.setVariable(BR.viewModel, mViewModel)
     }
 
     override fun getViewModel(): LoginViewModel = initViewModel {
@@ -37,8 +35,9 @@ class LoginActivity : BaseActivity<ActivityLayoutLoginBinding, LoginViewModel>()
             showError.observe { mDataBinding.root.showSnackbar(it) }
             hideKeyboard.observe { mDataBinding.root.hideKeyboard() }
             navigateToDashboard.observe {
-                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
-                finishAffinity()
+                UserNavigation.dynamicStart?.let {
+                    startActivity(it)
+                }
             }
             onSignupClick.observe {
                 if (it)

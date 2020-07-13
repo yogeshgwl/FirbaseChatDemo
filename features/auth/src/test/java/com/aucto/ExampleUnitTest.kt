@@ -1,4 +1,4 @@
-package com.auth
+package com.aucto
 
   import org.junit.Test
 

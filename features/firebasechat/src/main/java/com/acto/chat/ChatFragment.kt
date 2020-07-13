@@ -1,8 +1,7 @@
-package com.chat
+package com.acto.chat
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.aucto.chat.MyApplication
 import com.aucto.model.Message
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.firebase.ui.database.SnapshotParser
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_chat.*
 
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
+private const val KEY_FRIEND_TOKEN = "param1"
 private const val ARG_PARAM2 = "param2"
 
 /**
@@ -34,6 +35,8 @@ class ChatFragment : Fragment() {
     private lateinit var mFirebaseDatabaseReference: DatabaseReference
     val MESSAGES_CHILD: String = "messages"
     val linearLayoutManager = LinearLayoutManager(activity)
+    val userToken = MyApplication.loginManager.getUser()?.token ?: ""
+    val userName = MyApplication.loginManager.getUser()?.firstName ?: ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -44,7 +47,7 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(com.blog.R.layout.activity_chat, container, false)
+        return inflater.inflate(R.layout.activity_chat, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,41 +60,18 @@ class ChatFragment : Fragment() {
             )
         )
         init()
-
-        btnSend.setOnClickListener(View.OnClickListener {
+        val friendToken = arguments?.getString(KEY_FRIEND_TOKEN) ?: ""
+        btnSend.setOnClickListener {
             val friendlyMessage = Message(
-                "anonymous",
-                "Monika",
+                userToken,
+                friendToken,
                 editWriteMessage.text.toString(),
-                "Monika123" /* no image */
+                userName/* no image */
             )
             mFirebaseDatabaseReference.child(MESSAGES_CHILD)
                 .push().setValue(friendlyMessage)
             editWriteMessage.setText("")
-        })
-        mFirebaseDatabaseReference.child(MESSAGES_CHILD)
-            .addChildEventListener(object : ChildEventListener {
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    Log.d("onChildAdded", "onChildAdded called")
-                }
-
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                    Log.d("onChildAdded", "onChildChanged called")
-
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                    // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onChildRemoved(snapshot: DataSnapshot) {
-                    //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-            })
+        }
     }
 
     fun init() {
@@ -108,29 +88,7 @@ class ChatFragment : Fragment() {
         val options = FirebaseRecyclerOptions.Builder<Message>()
             .setQuery(messagesRef, parser)
             .build()
-        mFirebaseAdapter = object : FirebaseRecyclerAdapter<Message, MessageViewHolder>(options) {
-            override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MessageViewHolder {
-                val inflater = LayoutInflater.from(viewGroup.context)
-                return MessageViewHolder(
-                    inflater.inflate(
-                        com.blog.R.layout.rc_item_message_friend,
-                        viewGroup,
-                        false
-                    )
-                )
-            }
-
-            protected override fun onBindViewHolder(
-                viewHolder: MessageViewHolder, position: Int, friendlyMessage: Message
-            ) {
-                //   mProgressBar.setVisibility(ProgressBar.INVISIBLE)
-                viewHolder.bind(friendlyMessage)
-            }
-
-            override fun getItemViewType(position: Int): Int {
-                return super.getItemViewType(position)
-            }
-        }
+        mFirebaseAdapter = ChatAdapter(userToken, options)
         mFirebaseAdapter?.registerAdapterDataObserver(
             object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -165,6 +123,10 @@ class ChatFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = ChatFragment()
+        fun newInstance(friendToken: String) = ChatFragment().apply {
+            arguments = Bundle().apply {
+                putString(KEY_FRIEND_TOKEN, friendToken)
+            }
+        }
     }
 }

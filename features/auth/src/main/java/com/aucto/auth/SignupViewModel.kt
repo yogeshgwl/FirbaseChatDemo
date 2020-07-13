@@ -1,4 +1,4 @@
-package com.auth
+package com.aucto.auth
 
 import androidx.lifecycle.MutableLiveData
 import com.aucto.core.ActionLiveData
@@ -6,7 +6,7 @@ import com.aucto.core.BaseViewModel
 import com.aucto.core.FormValidator
 import com.aucto.model.User
 import com.aucto.networking.util.StringUtil
-import com.auth.login.LoginField
+import com.aucto.auth.R
 
 
 class SignupViewModel(val model: SignupRepository) : BaseViewModel() {

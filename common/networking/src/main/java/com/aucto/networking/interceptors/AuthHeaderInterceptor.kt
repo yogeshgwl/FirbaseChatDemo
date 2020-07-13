@@ -14,7 +14,7 @@ class AuthHeaderInterceptor(private val context: Context) : Interceptor {
         if (!request.url().encodedPath().endsWith("signup") ||
             !request.url().encodedPath().endsWith("check") ||
             !request.url().encodedPath().endsWith("checkprovider") ||
-            !request.url().encodedPath().endsWith("login")
+            !request.url().encodedPath().endsWith("auth")
         ) {
             request = request.newBuilder()
                 .build()

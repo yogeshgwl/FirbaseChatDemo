@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
+import java.util.*
 
 /**
  * @author GWL
@@ -23,6 +24,7 @@ class User : Parcelable {
     var profileUrl: String = ""
     var password: String = ""
     var confirmPassword: String = ""
+    var token: String = UUID.randomUUID().toString().substring(0, 15)
     override fun toString(): String {
         return "User(firstName='$firstName', lastName='$lastName', mobile='$mobile', email='$email', password='$password')"
     }

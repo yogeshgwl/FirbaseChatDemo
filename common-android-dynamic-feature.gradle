@@ -35,6 +35,7 @@ dependencies {
    // implementation Libraries.kotlin
     implementation SupportLibraries.appcompat
     implementation SupportLibraries.constrainLayout
+
     //implementation Libraries.multidex
   //  implementation project(Modules.model)
 }

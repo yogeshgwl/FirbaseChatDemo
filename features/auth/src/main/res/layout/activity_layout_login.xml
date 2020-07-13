@@ -4,17 +4,17 @@
 
     <data>
 
-        <import type="com.auth.login.LoginField" />
+        <import type="com.aucto.auth.LoginField" />
 
         <import type="android.view.View" />
 
         <variable
             name="viewModel"
-            type="com.auth.login.LoginViewModel" />
+            type="com.aucto.auth.LoginViewModel" />
 
         <variable
             name="mViewModel"
-            type="com.auth.login.LoginViewModel" />
+            type="com.aucto.auth.LoginViewModel" />
     </data>
 
     <ScrollView

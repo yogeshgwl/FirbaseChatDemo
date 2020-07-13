@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.blog">
+    package="com.acto.chat">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,7 +16,8 @@
     </dist:module>
 
     <application>
-        <activity android:name="com.chat.MainActivity" />
+        <activity android:name="com.acto.chat.ChatActivity" />
+        <activity android:name="com.acto.chat.UserActivity" />
     </application>
 
 </manifest>

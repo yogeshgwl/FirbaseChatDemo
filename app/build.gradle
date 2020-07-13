@@ -44,8 +44,8 @@ android {
 }
 
 dependencies {
-    api SupportLibraries.appcompat
-    api SupportLibraries.constrainLayout
+    implementation SupportLibraries.appcompat
+    implementation SupportLibraries.constrainLayout
     api 'androidx.legacy:legacy-support-v4:1.0.0'
     api project(Modules.model)
     api project(Modules.cache)
@@ -59,12 +59,13 @@ dependencies {
     kapt Libraries.roomCompiler
     api SupportLibraries.recyclerview
 
-    api Libraries.ktx
-    api Libraries.kotlin
+    implementation Libraries.ktx
+    implementation Libraries.kotlin
 
-    api SupportLibraries.design
+    implementation SupportLibraries.design
 
-    api 'com.google.firebase:firebase-analytics:17.4.4'
+
+    api FirebaseLibraries.DB
 }
 androidExtensions {
     experimental = true

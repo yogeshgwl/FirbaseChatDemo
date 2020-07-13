@@ -4,21 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 
 dependencies {
     implementation Libraries.kotlin
-    implementation project(Modules.networking)
-    implementation SupportLibraries.recyclerview
 
     implementation SupportLibraries.design
     implementation SupportLibraries.cardview
     implementation SupportLibraries.appcompat
     implementation SupportLibraries.constrainLayout
-    //----FIREBASE AUTHENTICATION---
-    implementation 'com.google.firebase:firebase-auth:19.3.2'
-
-    //-----FIREBASE DATABASE---
-    implementation 'com.google.firebase:firebase-database:19.3.1'
-
-    //-----FIREBASE STORAGE----
-    implementation 'com.google.firebase:firebase-storage:19.1.1'
 
     //-----DATA IS FETCHED FROM DATABASE AND ADDED TO RECYCLER VIEW----
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'

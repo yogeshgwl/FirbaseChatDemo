@@ -1,4 +1,4 @@
-package com.chat
+package com.acto.chat
 import com.aucto.model.Message
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

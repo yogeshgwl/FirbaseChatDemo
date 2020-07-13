@@ -1,9 +1,8 @@
-package com.chat
+package com.acto.chat
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.aucto.model.Message
-import com.blog.R
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 
@@ -43,6 +42,6 @@ class ChatAdapter(val userId: String, options: FirebaseRecyclerOptions<Message>)
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).idSender == userId) ITEM_TYPE_SENDER else   ITEM_TYPE_RECEIVER
+        return if (getItem(position).idSender == userId) ITEM_TYPE_SENDER else ITEM_TYPE_RECEIVER
     }
 }

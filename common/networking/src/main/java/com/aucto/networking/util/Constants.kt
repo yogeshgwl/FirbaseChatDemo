@@ -10,4 +10,5 @@ object Constants {
         "https://pilgrimrepo-dev1.s3.ap-south-1.amazonaws.com/po/terms_and_conditions/terms_and_conditions.html"
     const val PRIVACY_POLICY_URL: String =
         "https://pilgrimrepo-dev1.s3.ap-south-1.amazonaws.com/po/terms_and_conditions/privacy_policy.html"
+
 }
