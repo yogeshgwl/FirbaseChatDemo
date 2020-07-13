@@ -2,7 +2,7 @@ package com.aucto.chat
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.aucto.navigation.features.ChatNavigation
+import com.aucto.navigation.features.LoginNavigation
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         startLogin()
     }
 
-    private fun startLogin() = ChatNavigation.dynamicStart?.let {
+    private fun startLogin() = LoginNavigation.dynamicStart?.let {
         startActivity(it)
         finish()
     }

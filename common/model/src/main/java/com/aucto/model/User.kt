@@ -13,6 +13,8 @@ import kotlinx.android.parcel.Parcelize
 class User : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+    var firstName: String = ""
+    var lastName: String = ""
     var name: String = "test"
     var city: String = ""
     var state: String = ""
@@ -20,4 +22,9 @@ class User : Parcelable {
     var email: String = ""
     var profileUrl: String = ""
     var password: String = ""
+    var confirmPassword: String = ""
+    override fun toString(): String {
+        return "User(firstName='$firstName', lastName='$lastName', mobile='$mobile', email='$email', password='$password')"
+    }
+
 }

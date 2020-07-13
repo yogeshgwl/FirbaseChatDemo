@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.snackbar.Snackbar
@@ -49,4 +52,19 @@ fun View.showSnackbar(message: String) {
         Snackbar.LENGTH_SHORT
     )
     snackbar.show()
+}
+fun AppCompatActivity.setupToolbar(toolbar: Toolbar, darkIcons: Boolean = true,
+                                         enableUpButton: Boolean = true,
+                                         @StringRes resTitleId: Int? = null) {
+    val title = if (resTitleId != null) getString(resTitleId) else ""
+    setupToolbarWithTitle(toolbar, darkIcons, enableUpButton, title)
+}
+
+fun AppCompatActivity.setupToolbarWithTitle(toolbar: Toolbar, darkIcons: Boolean = true,
+                                                  enableUpButton: Boolean = true, title: String? = null) {
+    setSupportActionBar(toolbar)
+    supportActionBar?.setDisplayHomeAsUpEnabled(enableUpButton)
+    val indicator = if (darkIcons) R.drawable.ic_baseline_black else R.drawable.ic_baseline_white
+    supportActionBar?.setHomeAsUpIndicator(indicator)
+    supportActionBar?.title = title ?: ""
 }
