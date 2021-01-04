@@ -7,13 +7,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.aucto.cache.db.dao.*
 import com.aucto.model.*
+
 /**
  *The Room database for this app
  */
 
-@TypeConverters(CustomTypeConverter::class)
+@TypeConverters(CustomTypeConverter::class, DateConverter::class)
 @Database(
-    entities = [User::class, InstaFeed::class, FavoriteFeed::class, SearchHistory::class , BlogPostResponse::class],
+    entities = [User::class, InstaFeed::class, FavoriteFeed::class, SearchHistory::class, BlogPostResponse::class],
     version = 10,
     exportSchema = false
 )
@@ -21,7 +22,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun feedDao(): FeedDao
-   // abstract fun syncDao(): SyncRequestDao<Syncable>
+
+    // abstract fun syncDao(): SyncRequestDao<Syncable>
     abstract fun favDao(): FavoriteDao
     abstract fun searchDao(): SearchDao
     abstract fun blogDao(): BlogDao

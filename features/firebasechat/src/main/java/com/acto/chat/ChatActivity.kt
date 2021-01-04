@@ -1,33 +1,48 @@
 package com.acto.chat
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.acto.chat.databinding.ActivityChatBinding
 import com.aucto.chat.MyApplication
+import com.aucto.core.BaseActivity
+import com.aucto.core.Common
 import com.aucto.core.Common.Companion.MESSAGES_CHILD
+import com.aucto.core.initViewModel
 import com.aucto.model.Message
 import com.aucto.model.User
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.firebase.ui.database.SnapshotParser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.Query
+
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_chat.*
 
 
-class ChatActivity : AppCompatActivity() {
+class ChatActivity : BaseActivity<ActivityChatBinding, ChatViewModel>() {
 
-    var mFirebaseAdapter: FirebaseRecyclerAdapter<Message, MessageViewHolder>? = null
-    private lateinit var mFirebaseDatabaseReference: DatabaseReference
+    var mFirebaseAdapter: ChatAdapter? = null
+    private var mFirebaseDatabaseReference = Firebase.firestore
     val linearLayoutManager = LinearLayoutManager(this)
     val userToken = MyApplication.loginManager.getUser()?.token ?: ""
     val userName = MyApplication.loginManager.getUser()?.firstName ?: ""
+    var friendToken: String? = null
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_chat
+    }
+
+    override fun getViewModel(): ChatViewModel {
+        return initViewModel { ChatViewModel() }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+
         recyclerChat.layoutManager = linearLayoutManager
         recyclerChat.addItemDecoration(
             DividerItemDecoration(
@@ -35,55 +50,46 @@ class ChatActivity : AppCompatActivity() {
                 DividerItemDecoration.VERTICAL
             )
         )
-        init()
-        val user = intent?.getParcelableExtra<User>(INTENT_KEY_USER)
-        val friendToken = user?.token ?: " "
 
+        val user = intent?.getParcelableExtra<User>(INTENT_KEY_USER)
+        friendToken = intent?.getStringExtra(INTENT_KEY_SELECTED_USER_TOKEN)
+        // friendToken = user?.token ?: " "
+        Log.d("mTAGT", "receive token:  ${friendToken}")
+
+        Log.d("mTAGChat", "friendToken: above $userToken $friendToken ")
+
+        init()
         btnSend.setOnClickListener {
-            val friendlyMessage = Message(
-                userToken,
-                friendToken,
-                editWriteMessage.text.toString(),
-                userName/* no image */
-            )
-            mFirebaseDatabaseReference.child(MESSAGES_CHILD)
-                .push().setValue(friendlyMessage)
+            val friendlyMessage = Message().apply {
+                idSender = userToken
+                idReceiver = friendToken
+                text = editWriteMessage.text.toString()
+                name = userName/* no image */
+                timestamp = Timestamp.now().toDate()
+            }
+            mFirebaseDatabaseReference.collection(MESSAGES_CHILD).add(friendlyMessage)
             editWriteMessage.setText("")
         }
     }
 
-    fun init() {
+    private fun init() {
         // New child entries
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().reference
-        val parser = SnapshotParser<Message> { dataSnapshot ->
-            val friendlyMessage = dataSnapshot.getValue(Message::class.java)
-            friendlyMessage?.idReceiver = dataSnapshot.key
-            friendlyMessage!!
-        }
+        mFirebaseDatabaseReference = Firebase.firestore
 
-        val messagesRef = mFirebaseDatabaseReference.child(MESSAGES_CHILD)
+        val query = mFirebaseDatabaseReference.collection(MESSAGES_CHILD)
+                .whereEqualTo("idReceiver", "$friendToken")
+        //.whereEqualTo("idReceiver", friendToken)
         // val query = messagesRef.orderByValue()
-        val options = FirebaseRecyclerOptions.Builder<Message>()
-            .setQuery(messagesRef, parser)
+
+
+// The options for the adapter combine the paging configuration with query information
+// and application-specific options for lifecycle, etc.
+        val options = FirestorePagingOptions.Builder<Message>()
+            .setLifecycleOwner(this)
+            .setQuery(query, mViewModel.config, Message::class.java)
             .build()
+
         mFirebaseAdapter = ChatAdapter(userToken, options)
-        mFirebaseAdapter?.registerAdapterDataObserver(
-            object : RecyclerView.AdapterDataObserver() {
-                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                    super.onItemRangeInserted(positionStart, itemCount)
-                    val friendlyMessageCount = mFirebaseAdapter?.getItemCount()
-                    val lastVisiblePosition =
-                        linearLayoutManager.findLastCompletelyVisibleItemPosition()
-                    // If the recycler view is initially being loaded or the
-                    // user is at the bottom of the list, scroll to the bottom
-                    // of the list to show the newly added message.
-                    if (friendlyMessageCount != null) {
-                        if (lastVisiblePosition == -1 || positionStart >= friendlyMessageCount - 1 && lastVisiblePosition == positionStart - 1) {
-                            recyclerChat.scrollToPosition(positionStart)
-                        }
-                    }
-                }
-            })
 
         recyclerChat?.adapter = mFirebaseAdapter
 

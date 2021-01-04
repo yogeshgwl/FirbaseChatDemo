@@ -64,8 +64,10 @@ dependencies {
 
     implementation SupportLibraries.design
 
+    api platform('com.google.firebase:firebase-bom:26.2.0')
+    api 'com.google.firebase:firebase-firestore-ktx'
 
-    api FirebaseLibraries.DB
+   // api FirebaseLibraries.DB
 }
 androidExtensions {
     experimental = true

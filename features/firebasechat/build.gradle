@@ -9,7 +9,8 @@ dependencies {
     implementation SupportLibraries.cardview
     implementation SupportLibraries.appcompat
     implementation SupportLibraries.constrainLayout
+    implementation Libraries.paging
 
     //-----DATA IS FETCHED FROM DATABASE AND ADDED TO RECYCLER VIEW----
-    implementation 'com.firebaseui:firebase-ui-database:6.2.1'
+    implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
 }

@@ -7,6 +7,7 @@ import com.aucto.core.FormValidator
 import com.aucto.model.User
 import com.aucto.networking.util.StringUtil
 import com.aucto.auth.R
+import com.aucto.model.createUniqueId
 
 
 class SignupViewModel(val model: SignupRepository) : BaseViewModel() {
@@ -35,11 +36,11 @@ class SignupViewModel(val model: SignupRepository) : BaseViewModel() {
             showError.postValue(StringUtil.getString(R.string.email_empty_error))
         } else if (!FormValidator.isEmailValid(user.email)) {
             showError.postValue(StringUtil.getString(R.string.error_invalid_email_address))
-        } else if (user.mobile.isEmpty()) {
+        } /*else if (user.mobile.isEmpty()) {
             showError.postValue(StringUtil.getString(R.string.mobile_number_error))
         } else if (user.mobile.length != 10) {
             showError.postValue(StringUtil.getString(R.string.mobile_number_invalid))
-        } else if (user.password.isEmpty()) {
+        }*/ else if (user.password.isEmpty()) {
             showError.postValue(StringUtil.getString(R.string.password_empty_error))
         } else if (user.password.length < 6) {
             showError.postValue(StringUtil.getString(R.string.password_invalid))
@@ -52,6 +53,7 @@ class SignupViewModel(val model: SignupRepository) : BaseViewModel() {
         ) {
             showError.postValue(StringUtil.getString(R.string.password_not_same))
         } else {
+            user.token = "".createUniqueId()
             model.saveUserData(user, signupSuccess)
         }
     }

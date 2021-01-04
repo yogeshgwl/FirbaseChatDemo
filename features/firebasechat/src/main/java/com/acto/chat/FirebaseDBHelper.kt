@@ -1,13 +1,16 @@
 package com.acto.chat
 import com.aucto.model.Message
+/*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+*/
 /**
  * Created by shike99 on 2017/02/25.
- */
+ *//*
+
 object FirebaseDBHelper {
 
     // firebaseインスタンス初期化
@@ -51,4 +54,4 @@ object FirebaseDBHelper {
             }
         })
     }
-}
+}*/

@@ -1,13 +1,17 @@
 package com.acto.chat
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.aucto.model.Message
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
+import com.firebase.ui.firestore.paging.LoadingState
+import java.lang.Exception
 
-class ChatAdapter(val userId: String, options: FirebaseRecyclerOptions<Message>) :
-    FirebaseRecyclerAdapter<Message, MessageViewHolder>(options) {
+
+class ChatAdapter(val userId: String, options: FirestorePagingOptions<Message>) :
+    FirestorePagingAdapter<Message, MessageViewHolder>(options) {
 
     companion object {
         const val ITEM_TYPE_SENDER = 0
@@ -42,6 +46,26 @@ class ChatAdapter(val userId: String, options: FirebaseRecyclerOptions<Message>)
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).idSender == userId) ITEM_TYPE_SENDER else ITEM_TYPE_RECEIVER
+        Log.d(
+            "mTAGChats",
+            "onLoadingStateChanged: error ${getItem(position)?.toObject(Message::class.java)}"
+        )
+        return/* if ((getItem(position)?.get("idSender") == userId)) ITEM_TYPE_SENDER else*/ ITEM_TYPE_RECEIVER
+    }
+
+    override fun onLoadingStateChanged(state: LoadingState) {
+        super.onLoadingStateChanged(state)
+        Log.d("mTAGChat", "onLoadingStateChanged: above $state $currentList $itemCount")
+        when (state) {
+            LoadingState.ERROR -> {
+                Log.d("mTAGChats", "onLoadingStateChanged: error $state")
+            }
+        }
+    }
+
+    override fun onError(e: Exception) {
+        super.onError(e)
+        Log.d("mTAGChat", "onLoadingStateChanged: onError $e")
+
     }
 }

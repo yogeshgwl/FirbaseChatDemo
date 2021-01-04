@@ -11,8 +11,8 @@ class Common {
         const val PERMISSION_REQ_CODE: Int = 101
         const val GALLERY = 1
         const val CAMERA = 2
-        val MESSAGES_CHILD: String = "messages"
-
+        const val MESSAGES_CHILD: String = "messages"
+        const val USERS: String = "users"
 
 
         /* fun getStringValue(@StringRes error: Int?): String {

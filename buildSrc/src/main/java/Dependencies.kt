@@ -165,7 +165,7 @@ object GoogleLibraries {
 object FirebaseLibraries {
 /*    val auth = "com.google.firebase:firebase-auth:${Versions.firebaseAuth}"
     val core = "com.google.firebase:firebase-core:${Versions.firebaseCore}"*/
-    val DB = "com.google.firebase:firebase-database:${Versions.firebaseDB}"
+    val DB = "com.google.firebase:firebase-firestore:${Versions.firebaseDB}"
 }
 
 object FacebookLibraries {
