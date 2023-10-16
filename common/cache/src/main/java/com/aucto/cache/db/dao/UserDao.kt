@@ -21,4 +21,12 @@ interface UserDao {
 
     @Query("SELECT * FROM user")
     fun getAllUserList(): LiveData<List<User>>
+
+    @Query("DELETE FROM user")
+    fun clearDatabase()
+
+    @Query("SELECT * FROM user WHERE email = (:email)")
+    fun getUser(email: String): User?
+
+
 }
